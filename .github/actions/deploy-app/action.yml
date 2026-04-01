@@ -26,14 +26,14 @@ runs:
       run: echo "deploy ${{ inputs.env_name }}"
 
     - shell: powershell
-      run: |
-        pm2 delete greetings-app-${{ inputs.env_name }}
-        if ($LASTEXITCODE -ne 0) { exit 0 }
+      continue-on-error: true
+      run: pm2 delete greetings-app-${{ inputs.env_name }}
 
     - shell: powershell
       working-directory: ${{ inputs.app_path }}
       run: |
-        pm2 start app.py `
-          --name greetings-app-${{ inputs.env_name }} `
-          --interpreter venv\Scripts\python.exe `
-          -- --port ${{ inputs.port }}
+        $env:PORT = "${{ inputs.port }}"
+        pm2 start app.py --name greetings-app-${{ inputs.env_name }} --interpreter venv\Scripts\python.exe
+
+    - shell: powershell
+      run: pm2 list

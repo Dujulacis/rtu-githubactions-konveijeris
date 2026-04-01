@@ -15,18 +15,18 @@ runs:
         repository: mtararujs/python-greetings
         path: ${{ inputs.app_path }}
 
-    - shell: pwsh
+    - shell: powershell
       run: echo "create venv"
 
-    - shell: pwsh
+    - shell: powershell
       working-directory: ${{ inputs.app_path }}
       run: python -m venv venv
 
-    - shell: pwsh
+    - shell: powershell
       working-directory: ${{ inputs.app_path }}
       run: .\venv\Scripts\python.exe -m pip install -r requirements.txt
 
-    - shell: pwsh
+    - shell: powershell
       run: echo "save app"
 
     - uses: actions/upload-artifact@v4

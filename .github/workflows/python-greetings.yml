@@ -8,7 +8,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - run: echo "install deps"
-        shell: pwsh
+        shell: powershell
 
       - uses: ./.github/actions/install-pip-deps
         with:
@@ -19,7 +19,7 @@ jobs:
     needs: install-pip-deps
     steps:
       - run: echo "deploy dev"
-        shell: pwsh
+        shell: powershell
 
       - uses: ./.github/actions/deploy-app
         with:
@@ -32,7 +32,7 @@ jobs:
     needs: deploy-to-dev
     steps:
       - run: echo "test dev"
-        shell: pwsh
+        shell: powershell
 
       - uses: ./.github/actions/run-tests
         with:
@@ -44,7 +44,7 @@ jobs:
     needs: tests-on-dev
     steps:
       - run: echo "deploy stg"
-        shell: pwsh
+        shell: powershell
 
       - uses: ./.github/actions/deploy-app
         with:
@@ -57,7 +57,7 @@ jobs:
     needs: deploy-to-stg
     steps:
       - run: echo "test stg"
-        shell: pwsh
+        shell: powershell
 
       - uses: ./.github/actions/run-tests
         with:
@@ -69,7 +69,7 @@ jobs:
     needs: tests-on-stg
     steps:
       - run: echo "deploy preprod"
-        shell: pwsh
+        shell: powershell
 
       - uses: ./.github/actions/deploy-app
         with:
@@ -82,7 +82,7 @@ jobs:
     needs: deploy-to-preprod
     steps:
       - run: echo "test preprod"
-        shell: pwsh
+        shell: powershell
 
       - uses: ./.github/actions/run-tests
         with:
@@ -94,7 +94,7 @@ jobs:
     needs: tests-on-preprod
     steps:
       - run: echo "deploy prod"
-        shell: pwsh
+        shell: powershell
 
       - uses: ./.github/actions/deploy-app
         with:
@@ -107,7 +107,7 @@ jobs:
     needs: deploy-to-prod
     steps:
       - run: echo "test prod"
-        shell: pwsh
+        shell: powershell
 
       - uses: ./.github/actions/run-tests
         with:

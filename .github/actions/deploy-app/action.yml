@@ -14,7 +14,7 @@ runs:
   steps:
     - uses: actions/checkout@v6
 
-    - shell: pwsh
+    - shell: powershell
       run: echo "get app"
 
     - uses: actions/download-artifact@v4
@@ -22,15 +22,15 @@ runs:
         name: python-greetings-app
         path: ${{ inputs.app_path }}
 
-    - shell: pwsh
+    - shell: powershell
       run: echo "deploy ${{ inputs.env_name }}"
 
-    - shell: pwsh
+    - shell: powershell
       run: |
         pm2 delete greetings-app-${{ inputs.env_name }}
         if ($LASTEXITCODE -ne 0) { exit 0 }
 
-    - shell: pwsh
+    - shell: powershell
       working-directory: ${{ inputs.app_path }}
       run: |
         pm2 start app.py `

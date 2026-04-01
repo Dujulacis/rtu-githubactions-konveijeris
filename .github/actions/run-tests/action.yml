@@ -17,13 +17,13 @@ runs:
         repository: mtararujs/course-js-api-framework
         path: ${{ inputs.tests_path }}
 
-    - shell: pwsh
+    - shell: powershell
       run: echo "run tests ${{ inputs.env_name }}"
 
-    - shell: pwsh
+    - shell: powershell
       working-directory: ${{ inputs.tests_path }}
       run: npm install
 
-    - shell: pwsh
+    - shell: powershell
       working-directory: ${{ inputs.tests_path }}
       run: npm run greetings greetings_${{ inputs.env_name }}

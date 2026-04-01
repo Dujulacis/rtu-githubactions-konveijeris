@@ -1,0 +1,35 @@
+name: install-pip-deps
+
+inputs:
+  app_path:
+    required: true
+    default: python-greetings
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v6
+
+    - uses: actions/checkout@v6
+      with:
+        repository: mtararujs/python-greetings
+        path: ${{ inputs.app_path }}
+
+    - shell: pwsh
+      run: echo "create venv"
+
+    - shell: pwsh
+      working-directory: ${{ inputs.app_path }}
+      run: python -m venv venv
+
+    - shell: pwsh
+      working-directory: ${{ inputs.app_path }}
+      run: .\venv\Scripts\python.exe -m pip install -r requirements.txt
+
+    - shell: pwsh
+      run: echo "save app"
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: python-greetings-app
+        path: ${{ inputs.app_path }}

@@ -1,0 +1,39 @@
+name: deploy-app
+
+inputs:
+  env_name:
+    required: true
+  port:
+    required: true
+  app_path:
+    required: true
+    default: python-greetings
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v6
+
+    - shell: pwsh
+      run: echo "get app"
+
+    - uses: actions/download-artifact@v4
+      with:
+        name: python-greetings-app
+        path: ${{ inputs.app_path }}
+
+    - shell: pwsh
+      run: echo "deploy ${{ inputs.env_name }}"
+
+    - shell: pwsh
+      run: |
+        pm2 delete greetings-app-${{ inputs.env_name }}
+        if ($LASTEXITCODE -ne 0) { exit 0 }
+
+    - shell: pwsh
+      working-directory: ${{ inputs.app_path }}
+      run: |
+        pm2 start app.py `
+          --name greetings-app-${{ inputs.env_name }} `
+          --interpreter venv\Scripts\python.exe `
+          -- --port ${{ inputs.port }}
